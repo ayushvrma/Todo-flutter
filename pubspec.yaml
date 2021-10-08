@@ -39,8 +39,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  floor_generator: ^1.2.0
+  moor_generator: ^1.4.0
   build_runner: ^2.1.2
+  provider: ^3.0.0+1
+  flutter_slidable: ^0.5.3
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
