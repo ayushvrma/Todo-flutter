@@ -33,18 +33,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Box<Task> taskBox;
   @override
   void initState() async {
-    await Hive.initFlutter();
-    await Hive.openBox<String>("tasks");
     super.initState();
+    taskBox = Hive.box('tasks');
   }
 
   TextEditingController _textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final Box<Task> taskBox = Hive.box('tasks');
     return Scaffold(
       body: ValueListenableBuilder<Box<dynamic>>(
         valueListenable: taskBox.listenable(),
