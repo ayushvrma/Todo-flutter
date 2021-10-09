@@ -33,17 +33,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Box<Task> taskBox;
-  @override
-  void initState() async {
-    super.initState();
-    taskBox = Hive.box('tasks');
-  }
+  // Box<Task> taskBox;
+  // @override
+  // void initState() async {
+  //   super.initState();
+  //   taskBox = Hive.box('tasks');
+  // }
 
   TextEditingController _textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final Box<Task> taskBox = Hive.box('tasks');
     return Scaffold(
       body: ValueListenableBuilder<Box<dynamic>>(
         valueListenable: taskBox.listenable(),
@@ -57,27 +58,10 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xff0D3257),
-        onPressed: () => showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Add New Task'),
-                content: TextField(
-                    controller: _textFieldController,
-                    decoration: InputDecoration(hintText: "Enter task"),
-                    autofocus: true),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text('SAVE'),
-                    onPressed: () {
-                      taskBox.add(Task('title', false));
-                    },
-                  ),
-                ],
-              );
-            }),
-        child: Icon(Icons.add),
+        onPressed: () {
+          taskBox.add(Task('title', false));
+        },
+        child: Icon(Icons.title),
       ),
     );
   }
