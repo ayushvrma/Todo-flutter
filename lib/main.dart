@@ -11,7 +11,7 @@ void main() async {
 //  Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
 
   Hive.registerAdapter<Task>(TaskAdapter());
-  await Future.wait([Hive.openBox<Task>('notes')]);
+  await Future.wait([Hive.openBox<Task>('tasks')]);
   runApp(MyApp());
 }
 
@@ -33,6 +33,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() async {
+    await Hive.initFlutter();
+    await Hive.openBox<String>("tasks");
+    super.initState();
+  }
+
   TextEditingController _textFieldController = TextEditingController();
 
   @override
@@ -41,12 +48,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: ValueListenableBuilder<Box<dynamic>>(
         valueListenable: taskBox.listenable(),
-        builder: (_, Box<dynamic> noteBox, __) {
+        builder: (_, Box<dynamic> taskBox, __) {
           return ListView.builder(
             itemBuilder: (_, int index) {
-              return Text(noteBox.getAt(index).title);
+              return Text(taskBox.getAt(index).title);
             },
-            itemCount: noteBox.length,
+            itemCount: taskBox.length,
           );
         },
       ),
