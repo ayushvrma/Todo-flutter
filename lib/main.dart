@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     final Box<Task> taskBox = Hive.box('tasks');
     return Scaffold(
       body: ValueListenableBuilder<Box<dynamic>>(
-        valueListenable: noteBox.listenable(),
+        valueListenable: taskBox.listenable(),
         builder: (_, Box<dynamic> noteBox, __) {
           return ListView.builder(
             itemBuilder: (_, int index) {
@@ -64,7 +64,9 @@ class _HomePageState extends State<HomePage> {
                 actions: <Widget>[
                   TextButton(
                     child: Text('SAVE'),
-                    onPressed: () => onAddTask(),
+                    onPressed: () {
+                      taskBox.add(Task('title', false));
+                    },
                   ),
                 ],
               );
