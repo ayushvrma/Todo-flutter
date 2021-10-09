@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   //   taskBox = Hive.box('tasks');
   // }
 
-  TextEditingController _textFieldController = TextEditingController();
+  TextEditingController myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +58,42 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        // When the user presses the button, show an alert dialog containing
+        // the text that the user has entered into the text field.
         onPressed: () {
-          taskBox.add(Task('title', false));
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                // Retrieve the text the that user has entered by using the
+                // TextEditingController.
+                content: TextField(
+                  controller: myController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter a Task',
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      taskBox.add(Task(myController.text, false));
+                      myController.text = '';
+                      Navigator.pop(context, 'OK');
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
         },
-        child: Icon(Icons.title),
+        tooltip: 'Entered the task',
+        child: const Icon(Icons.add),
       ),
     );
   }
