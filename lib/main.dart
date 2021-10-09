@@ -27,41 +27,28 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  static const String routeName = '';
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late Box<String> tasksBox;
   TextEditingController _textFieldController = TextEditingController();
-
-  void onAddTask() {
-    if (_textFieldController.text.isNotEmpty) {
-      tasksBox.add(_textFieldController.text);
-      Navigator.pop(context);
-      _textFieldController.clear();
-      return;
-    }
-  }
-
-  void onDeleteTask(int index) {
-    tasksBox.deleteAt(index);
-    return;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    tasksBox = Hive.box("tasksBox");
-  }
 
   @override
   Widget build(BuildContext context) {
+    final Box<Task> taskBox = Hive.box('tasks');
     return Scaffold(
-      body: Center(
-        child: Container(
-          child: Text('oyus'),
-        ),
+      body: ValueListenableBuilder<Box<dynamic>>(
+        valueListenable: noteBox.listenable(),
+        builder: (_, Box<dynamic> noteBox, __) {
+          return ListView.builder(
+            itemBuilder: (_, int index) {
+              return Text(noteBox.getAt(index).title);
+            },
+            itemCount: noteBox.length,
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xff0D3257),
