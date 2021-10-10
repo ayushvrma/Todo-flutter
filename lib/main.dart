@@ -33,13 +33,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Box<Task> taskBox;
-  // @override
-  // void initState() async {
-  //   super.initState();
-  //   taskBox = Hive.box('tasks');
-  // }
-
   TextEditingController myController = TextEditingController();
 
   @override
@@ -80,10 +73,10 @@ class _HomePageState extends State<HomePage> {
                   trailing: TextButton(
                       onPressed: () {
                         setState(() {
-                          taskBox.delete(index);
+                          taskBox.deleteAt(index);
                         });
                       },
-                      child: Icon(Icons.delete)),
+                      child: Icon(Icons.delete, color: Colors.red)),
                   title: Text(
                     taskBox.getAt(index).title,
                     style: taskBox.getAt(index).isDone
