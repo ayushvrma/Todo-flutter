@@ -51,7 +51,17 @@ class _HomePageState extends State<HomePage> {
         builder: (_, Box<dynamic> taskBox, __) {
           return ListView.builder(
             itemBuilder: (_, int index) {
-              return Text(taskBox.getAt(index).title);
+              return ListTile(
+                leading: Checkbox(
+                  value: taskBox.getAt(index).isDone,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      taskBox.getAt(index).isDone ? false : true;
+                    });
+                  },
+                ),
+              );
+              //Text(taskBox.getAt(index).title);
             },
             itemCount: taskBox.length,
           );
