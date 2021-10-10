@@ -77,11 +77,13 @@ class _HomePageState extends State<HomePage> {
                       });
                     },
                   ),
-                  trailing: Text(
-                    'OYUS',
-                    style: TextStyle(
-                        color: Colors.redAccent, fontStyle: FontStyle.italic),
-                  ),
+                  trailing: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          taskBox.delete(index);
+                        });
+                      },
+                      child: Icon(Icons.delete)),
                   title: Text(
                     taskBox.getAt(index).title,
                     style: taskBox.getAt(index).isDone
