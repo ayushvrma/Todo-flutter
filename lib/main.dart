@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         builder: (_, Box<dynamic> taskBox, __) {
           return ListView.builder(
             itemBuilder: (_, int index) {
-              return ListTile(
+              return InkWell(
                 onTap: () {
                   setState(() {
                     bool value = taskBox.getAt(index).isDone;
@@ -59,26 +59,37 @@ class _HomePageState extends State<HomePage> {
                         index, Task(taskBox.getAt(index).title, !value));
                   });
                 },
-                leading: Checkbox(
-                  value: taskBox.getAt(index).isDone,
-                  onChanged: (value) {
+                child: ListTile(
+                  onTap: () {
                     setState(() {
-                      taskBox.getAt(index).isDone ? false : true;
+                      bool value = taskBox.getAt(index).isDone;
+                      taskBox.putAt(
+                          index, Task(taskBox.getAt(index).title, !value));
                     });
                   },
-                ),
-                trailing: Text(
-                  'OYUS',
-                  style: TextStyle(
-                      color: Colors.redAccent, fontStyle: FontStyle.italic),
-                ),
-                title: Text(
-                  taskBox.getAt(index).title,
-                  style: taskBox.getAt(index).isDone
-                      ? TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.black54)
-                      : null,
+                  leading: Checkbox(
+                    value: taskBox.getAt(index).isDone,
+                    onChanged: (value) {
+                      setState(() {
+                        bool value = taskBox.getAt(index).isDone;
+                        taskBox.putAt(
+                            index, Task(taskBox.getAt(index).title, !value));
+                      });
+                    },
+                  ),
+                  trailing: Text(
+                    'OYUS',
+                    style: TextStyle(
+                        color: Colors.redAccent, fontStyle: FontStyle.italic),
+                  ),
+                  title: Text(
+                    taskBox.getAt(index).title,
+                    style: taskBox.getAt(index).isDone
+                        ? TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.black54)
+                        : null,
+                  ),
                 ),
               );
               //Text(taskBox.getAt(index).title);
