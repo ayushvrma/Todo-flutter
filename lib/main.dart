@@ -105,6 +105,7 @@ class _HomePageState extends State<HomePage> {
                 // TextEditingController.
                 content: TextField(
                   controller: myController,
+                  autofocus: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter a Task',
@@ -112,7 +113,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 actions: <Widget>[
                   TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    onPressed: () {
+                      myController.text = '';
+                      Navigator.pop(context, 'Cancel');
+                    },
                     child: const Text('Cancel'),
                   ),
                   TextButton(
