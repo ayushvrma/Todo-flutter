@@ -52,13 +52,33 @@ class _HomePageState extends State<HomePage> {
           return ListView.builder(
             itemBuilder: (_, int index) {
               return ListTile(
+                onTap: () {
+                  setState(() {
+                    bool value = taskBox.getAt(index).isDone;
+                    taskBox.putAt(
+                        index, Task(taskBox.getAt(index).title, !value));
+                  });
+                },
                 leading: Checkbox(
                   value: taskBox.getAt(index).isDone,
-                  onChanged: (bool? newValue) {
+                  onChanged: (value) {
                     setState(() {
                       taskBox.getAt(index).isDone ? false : true;
                     });
                   },
+                ),
+                trailing: Text(
+                  'OYUS',
+                  style: TextStyle(
+                      color: Colors.redAccent, fontStyle: FontStyle.italic),
+                ),
+                title: Text(
+                  taskBox.getAt(index).title,
+                  style: taskBox.getAt(index).isDone
+                      ? TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.black54)
+                      : null,
                 ),
               );
               //Text(taskBox.getAt(index).title);
